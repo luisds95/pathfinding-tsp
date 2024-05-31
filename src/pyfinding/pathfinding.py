@@ -131,7 +131,7 @@ def traverse_graph_with_nn(
     """
     distance = 0
     path = [current]
-    while remaining:
+    while len(remaining) > 1:
         if memo:
             memoized = memo.get(current, remaining)
             if memoized is not None:
@@ -170,6 +170,10 @@ def traverse_graph_with_nn(
 
         if memo:
             path.append(current)
+
+    if remaining:
+        distance += remaining[0].get_step_distance(current.coords)
+        path.append(remaining[0])
 
     if memo:
         memo.set(path[0], path[1:], distance)
